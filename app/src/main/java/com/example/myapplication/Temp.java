@@ -3,30 +3,33 @@ package com.example.myapplication;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Temp extends AppCompatActivity implements View.OnClickListener {
+public class Temp extends AppCompatActivity {
+
+    private TextView output;
+    private EditText input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
 
-        //按钮点击事件
-        findViewById(R.id.button).setOnClickListener(this);
+        input = findViewById(R.id.editTextTextPersonName2);
+        output = findViewById(R.id.textView3);
+        Button b1 = findViewById(R.id.button);
+
+        b1.setOnClickListener(button_listener);
     }
 
-    @Override
-    public void onClick(View view) {
-        if(view.getId() == R.id.button){
-            //获取华氏度
-            EditText input = findViewById(R.id.editTextTextPersonName2);
-            int inputText = Integer.valueOf(input.getText().toString());
-
-            //显示摄氏度
-            TextView output = findViewById(R.id.textView3);
-            output.setText((int) ((inputText-32)/1.8));
+    Button.OnClickListener button_listener = new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            double input1 = Double.parseDouble(input.getText().toString());
+            output.setText((int) (input1-32))/18);
         }
-    }
+    };
 }
