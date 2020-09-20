@@ -17,4 +17,5 @@
     <string name="Temprature_show">温度显示</string>
     <string name="Centigradedegree">摄氏度是 </string>
     <string name="Fahrenheitdegree">华氏度是 </string>
+    <string name="Reset">重置</string>
 </resources>

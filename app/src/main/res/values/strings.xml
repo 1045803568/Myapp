@@ -17,4 +17,5 @@
     <string name="Temprature_show">Temprature show</string>
     <string name="Centigradedegree">Centigradedegree is </string>
     <string name="Fahrenheitdegree">Fahrenheitdegree is </string>
+    <string name="Reset">Reset</string>
 </resources>
