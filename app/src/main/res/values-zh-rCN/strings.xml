@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">我的应用</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title">生日快乐your birthday wish</string>
+    <string name="Temprature">请输入温度 </string>
+    <string name="F2C">华转摄</string>
+    <string name="C2F">摄转华</string>
+    <string name="Temprature_show">温度显示</string>
+    <string name="Centigradedegree">摄氏度是 </string>
+    <string name="Fahrenheitdegree">华氏度是 </string>
 </resources>

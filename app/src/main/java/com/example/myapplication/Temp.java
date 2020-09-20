@@ -21,15 +21,24 @@ public class Temp extends AppCompatActivity {
         input = findViewById(R.id.editTextTextPersonName2);
         output = findViewById(R.id.textView3);
         Button b1 = findViewById(R.id.button);
+        Button b2 = findViewById(R.id.button1);
 
         b1.setOnClickListener(button_listener);
+        b2.setOnClickListener(button_listener1);
     }
 
     Button.OnClickListener button_listener = new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            double input1 = Double.parseDouble(input.getText().toString());
-            output.setText((int) (input1-32))/18);
+            float f = Float.parseFloat(input.getText().toString());
+            output.setText(getResources().getString(R.string.Centigradedegree)+String.valueOf(((f-32.0f)/1.8f)));
+        }
+    };
+    Button.OnClickListener button_listener1 = new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            float f = Float.parseFloat(input.getText().toString());
+            output.setText(getResources().getString(R.string.Fahrenheitdegree)+String.valueOf((f*1.8f)+32f));
         }
     };
 }

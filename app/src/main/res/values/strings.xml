@@ -11,7 +11,10 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title">Happy Birthday</string>
     <string name="title2">Pleasa enter your birthday wish</string>
-    <string name="Fahrenheitdegree">Please enter Fahrenheit degree </string>
-    <string name="Exchange">exchange</string>
-    <string name="Centigradedegree">Centigradedegree</string>
+    <string name="Temprature">Please enter Temprature </string>
+    <string name="F2C">F2C</string>
+    <string name="C2F">C2F</string>
+    <string name="Temprature_show">Temprature show</string>
+    <string name="Centigradedegree">Centigradedegree is </string>
+    <string name="Fahrenheitdegree">Fahrenheitdegree is </string>
 </resources>

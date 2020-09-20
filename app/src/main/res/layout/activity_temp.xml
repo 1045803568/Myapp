@@ -9,25 +9,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
         android:orientation="vertical"
-        android:layout_margin="16dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <EditText
             android:id="@+id/editTextTextPersonName2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/Fahrenheitdegree"
+            android:hint="@string/Temprature"
             android:inputType="numberDecimal"
             android:padding="16dp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/Exchange"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:padding="16dp"
+                android:text="F2C" />
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="16dp"
+                android:text="C2F" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView3"
@@ -35,6 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="16dp"
-            android:text="@string/Centigradedegree" />
+            android:textSize="72px"
+            android:text="@string/Temprature_show" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
