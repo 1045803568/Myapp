@@ -22,4 +22,5 @@
     <string name="Dollar">美元</string>
     <string name="EURO">欧元</string>
     <string name="WON">韩元</string>
+    <string name="rata_config">确认</string>
 </resources>

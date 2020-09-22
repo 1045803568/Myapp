@@ -22,4 +22,6 @@
     <string name="Dollar">Dollar</string>
     <string name="EURO">EURO</string>
     <string name="WON">WON</string>
+    <string name="rata_config">config</string>
+    <string name="sava">Sava</string>
 </resources>
