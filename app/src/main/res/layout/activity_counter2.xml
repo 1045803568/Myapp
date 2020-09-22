@@ -39,12 +39,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="579dp"
+            android:layout_height="528dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="531dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -60,17 +60,17 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
-                        android:textStyle="bold"
-                        android:text="TeamA" />
+                        android:text="TeamA"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textStyle="bold"
                         android:text="0"
-                        android:textSize="108px" />
+                        android:textSize="108px"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/button6"
@@ -104,6 +104,7 @@
                         android:text="FREE THROW" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -117,17 +118,17 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
-                        android:textStyle="bold"
-                        android:text="TeamB" />
+                        android:text="TeamB"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textStyle="bold"
                         android:text="0"
-                        android:textSize="108px" />
+                        android:textSize="108px"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/button10"
@@ -177,7 +178,6 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="32dp"
                 android:backgroundTint="#FFC107"
-                android:layou_alignParentBottom="true"
                 android:text="RESET" />
         </LinearLayout>
 

@@ -9,8 +9,8 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class Counter extends AppCompatActivity {
-    private TextView count;
-    int sum = 0;
+    static private TextView count;
+    static int sum = 0;
     private Button bt1;
     private Button bt2;
     private Button bt3;
