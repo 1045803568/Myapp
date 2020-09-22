@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".Rate_config">
+    tools:context=".RateConfig">
 
     <EditText
         android:id="@+id/editTextTextPersonName4"
@@ -45,5 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:backgroundTint="#FF9800"
+        android:onClick="save"
         android:text="@string/sava" />
 </LinearLayout>

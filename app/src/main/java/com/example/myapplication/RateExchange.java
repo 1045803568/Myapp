@@ -33,7 +33,7 @@ public class RateExchange extends AppCompatActivity {
     }
 
     public void exchange(View bt){
-        if(input.getText().toString()==null||input.getText().toString()==""){
+        if(input.getText().toString().length()==0){
             Toast.makeText(this,"请输入金额",Toast.LENGTH_SHORT).show();
         }else {
             switch(bt.getId()) {
@@ -54,7 +54,7 @@ public class RateExchange extends AppCompatActivity {
     }
 
     public void open(View v) {
-        Intent config = new Intent(this,Rate_config.class);
+        Intent config = new Intent(this, RateConfig.class);
         config.putExtra("dollar_rate",dallarRate);
         config.putExtra("euro_rate",euroRate);
         config.putExtra("won_rate",wonRate);
