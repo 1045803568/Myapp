@@ -32,7 +32,7 @@ public class Counter extends AppCompatActivity {
         bt3.setOnClickListener(new BtnClickListener());
         bt4.setOnClickListener(new BtnClickListener());
     }
-    class BtnClickListener implements View.OnClickListener
+    static class BtnClickListener implements View.OnClickListener
     {
         @Override
         public void onClick(View v) {
