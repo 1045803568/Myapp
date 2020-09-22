@@ -18,4 +18,8 @@
     <string name="Centigradedegree">Centigradedegree is </string>
     <string name="Fahrenheitdegree">Fahrenheitdegree is </string>
     <string name="Reset">Reset</string>
+    <string name="input_RMB">input RMB</string>
+    <string name="Dollar">Dollar</string>
+    <string name="EURO">EURO</string>
+    <string name="WON">WON</string>
 </resources>

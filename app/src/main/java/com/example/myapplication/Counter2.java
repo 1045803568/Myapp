@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class Counter2 extends AppCompatActivity {
 
-    private TextView count1,count2;
+    TextView count1,count2;
     int sum1,sum2 = 0;
     private Button bt1;
     private Button bt2;
@@ -33,13 +33,13 @@ public class Counter2 extends AppCompatActivity {
         bt6 = findViewById(R.id.button12);
         bt7 = findViewById(R.id.button14);
 
-        bt1.setOnClickListener(new Counter.BtnClickListener());
-        bt2.setOnClickListener(new Counter.BtnClickListener());
-        bt3.setOnClickListener(new Counter.BtnClickListener());
-        bt4.setOnClickListener(new Counter.BtnClickListener());
-        bt5.setOnClickListener(new Counter.BtnClickListener());
-        bt6.setOnClickListener(new Counter.BtnClickListener());
-        bt7.setOnClickListener(new Counter.BtnClickListener());
+        bt1.setOnClickListener(new Counter2.BtnClickListener());
+        bt2.setOnClickListener(new Counter2.BtnClickListener());
+        bt3.setOnClickListener(new Counter2.BtnClickListener());
+        bt4.setOnClickListener(new Counter2.BtnClickListener());
+        bt5.setOnClickListener(new Counter2.BtnClickListener());
+        bt6.setOnClickListener(new Counter2.BtnClickListener());
+        bt7.setOnClickListener(new Counter2.BtnClickListener());
 
     }
     class BtnClickListener implements View.OnClickListener
@@ -75,7 +75,7 @@ public class Counter2 extends AppCompatActivity {
                     sum1 = 0;
                     sum2 = 0;
                     count1.setText(String.valueOf(sum1));
-                    count1.setText(String.valueOf(sum2));
+                    count2.setText(String.valueOf(sum2));
                     break;
 
             }

@@ -18,4 +18,8 @@
     <string name="Centigradedegree">摄氏度是 </string>
     <string name="Fahrenheitdegree">华氏度是 </string>
     <string name="Reset">重置</string>
+    <string name="input_RMB">输入RMB</string>
+    <string name="Dollar">美元</string>
+    <string name="EURO">欧元</string>
+    <string name="WON">韩元</string>
 </resources>
