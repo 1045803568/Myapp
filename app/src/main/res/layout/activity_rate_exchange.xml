@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#FF9800"
-            android:onClick="open"
+            android:onClick="set"
             android:text="@string/rata_config" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -9,12 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RateConfig"></activity>
+        <activity android:name=".RateExchange"></activity>
+        <activity android:name=".RateConfig" />
         <activity android:name=".Counter2" />
         <activity android:name=".Counter" />
         <activity android:name=".Temp" />
         <activity
-            android:name=".RateExchange"
+            android:name=".Hdler"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
