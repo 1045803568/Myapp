@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,30 +18,30 @@ import java.net.URL;
 public class Hdler extends AppCompatActivity implements Runnable {
 
     private static final String TAG = "Handler";
-    Handler handler;
+
+    Handler handler = new Handler(){
+        public void handleMessage(Message msg){
+            if(msg.what==5){
+                Log.i(TAG,"handlerMessage:getMessage msg = ");
+                String str = (String)msg.obj;
+                Log.i(TAG,"handlerMessage:getMessage msg = "+str);
+                TextView show = findViewById(R.id.textView12);
+                show.setText(str);
+            }super.handleMessage(msg);
+        }
+    };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handler);
-
-        final TextView show = findViewById(R.id.textView12);
-        //ÂºÄÂêØÁ∫øÁ®ã
+        //ø™∆Ùœﬂ≥Ã
         Thread t = new Thread(this);
         t.start();
-        handler = new Handler(){
-            public void handlerMessage(Message msg){
-                if(msg.what==5){
-                    String str = (String)msg.obj;
-                    Log.i(TAG,"handlerMessage:getMessage msg = "+str);
-                    show.setText(str);
-                }
-            }
-        };
 
     }
 
-    //ÈÄöËøáHandlerÂÆûÁé∞Á∫øÁ®ãÈó¥ÈÄö‰ø°
+    //Õ®π˝Handler µœ÷œﬂ≥Ãº‰Õ®–≈
     @Override
     public void run() {
         /*Log.i(TAG,"run:run()...");
@@ -49,13 +51,13 @@ public class Hdler extends AppCompatActivity implements Runnable {
         handler.sendMessage(msg);*/
         URL url = null;
         try {
-            url = new URL("www.usd-cny.com/bankofchina.htm");
+            url = new URL("https://www.usd-cny.com/bankofchina.htm");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             InputStream in = http.getInputStream();
 
             String html = inputStream2String(in);
-            Log.i(TAG,"run:html"+html);
-
+            Message msg = handler.obtainMessage(5,html);
+            handler.sendMessage(msg);
         }catch (MalformedURLException e){
             e.printStackTrace();
         }catch (IOException e){
@@ -64,6 +66,16 @@ public class Hdler extends AppCompatActivity implements Runnable {
     }
 
     private String inputStream2String(InputStream inputStream) throws IOException {
-
+        final int bufferSize = 1024;
+        final char[] buffer = new char[bufferSize];
+        final StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(inputStream, "gb2312");
+        while (true) {
+            int rsz = in.read(buffer, 0, buffer.length);
+            if (rsz < 0)
+                break;
+            out.append(buffer, 0, rsz);
+        }
+        return out.toString();
     }
 }
