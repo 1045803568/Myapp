@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +19,8 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Hdler extends AppCompatActivity implements Runnable {
 
@@ -22,10 +29,30 @@ public class Hdler extends AppCompatActivity implements Runnable {
     Handler handler = new Handler(){
         public void handleMessage(Message msg){
             if(msg.what==5){
-                Log.i(TAG,"handlerMessage:getMessage msg = ");
+                //Log.i(TAG,"handlerMessage:getMessage msg = ");
                 String str = (String)msg.obj;
-                Log.i(TAG,"handlerMessage:getMessage msg = "+str);
+                //Log.i(TAG,"handlerMessage:getMessage msg = "+str);
                 TextView show = findViewById(R.id.textView12);
+                Document doc = Jsoup.parse(str);
+                Elements tables = doc.getElementsByTag("table");
+                Element table = tables.get(0);
+                Elements tds = table.getElementsByTag("td");
+                float v;
+                Map<String, Float> rate = new HashMap<String, Float>();
+                for(int i=0;i<tds.size();i+=6){
+                    Element td1 = tds.get(i);
+                    Element td2 = tds.get(i+5);
+
+                    String str1 = td1.text();
+                    String val = td2.text();
+                    //Log.i(TAG,"run: " + str1 + "==>" + val);
+                    v = 100f / Float.parseFloat(val);
+                    rate.put(str1,v);
+                    Log.i(TAG,"run: " + str1 + "==>" + v);
+                }
+                Log.i(TAG, "ç¾Žå…ƒæ±‡çŽ‡ï¼š "+ rate.get("ç¾Žå…ƒ"));
+                Log.i(TAG, "æ¬§å…ƒæ±‡çŽ‡ï¼š "+ rate.get("æ¬§å…ƒ"));
+                Log.i(TAG, "éŸ©å…ƒæ±‡çŽ‡ï¼š "+ rate.get("éŸ©å…ƒ"));
                 show.setText(str);
             }super.handleMessage(msg);
         }
@@ -35,13 +62,13 @@ public class Hdler extends AppCompatActivity implements Runnable {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handler);
-        //¿ªÆôÏß³Ì
+
         Thread t = new Thread(this);
         t.start();
 
     }
 
-    //Í¨¹ýHandlerÊµÏÖÏß³Ì¼äÍ¨ÐÅ
+
     @Override
     public void run() {
         /*Log.i(TAG,"run:run()...");
@@ -49,6 +76,8 @@ public class Hdler extends AppCompatActivity implements Runnable {
         //msg.what = 5;
         msg.obj = "hello from run()";
         handler.sendMessage(msg);*/
+
+
         URL url = null;
         try {
             url = new URL("https://www.usd-cny.com/bankofchina.htm");
@@ -69,7 +98,7 @@ public class Hdler extends AppCompatActivity implements Runnable {
         final int bufferSize = 1024;
         final char[] buffer = new char[bufferSize];
         final StringBuilder out = new StringBuilder();
-        Reader in = new InputStreamReader(inputStream, "gb2312");
+        Reader in = new InputStreamReader(inputStream, "GBK");
         while (true) {
             int rsz = in.read(buffer, 0, buffer.length);
             if (rsz < 0)
