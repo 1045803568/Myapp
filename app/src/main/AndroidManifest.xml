@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,13 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RateExchange"></activity>
+        <activity android:name=".Hdler"></activity>
+        <activity android:name=".RateExchange" />
         <activity android:name=".RateConfig" />
         <activity android:name=".Counter2" />
         <activity android:name=".Counter" />
         <activity android:name=".Temp" />
         <activity
-            android:name=".Hdler"
+            android:name=".RateShow"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

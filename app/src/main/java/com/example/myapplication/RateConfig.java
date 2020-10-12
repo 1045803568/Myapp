@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-public class RateConfig extends AppCompatActivity {
+public class RateConfig extends AppCompatActivity  {
 
     private static final String TAG = "Rate_config";
     EditText d1;
