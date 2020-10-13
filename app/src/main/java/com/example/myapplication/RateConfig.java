@@ -68,7 +68,6 @@ public class RateConfig extends AppCompatActivity  {
         SharedPreferences sharedPreferences = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
         PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.putFloat("dollar_rate",dollar);
         editor.putFloat("euro_rate",euro);
         editor.putFloat("won_rate",won);
