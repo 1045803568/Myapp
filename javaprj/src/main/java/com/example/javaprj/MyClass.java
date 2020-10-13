@@ -21,13 +21,13 @@ import java.util.Date;
 public class MyClass {
     public static void main(String[] args) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");// HH:mm:ss
-        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(" HHmmss");// HH:mm:ss
+        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HHmmss");// HH:mm:ss
         Date date = new Date(System.currentTimeMillis());
         String nowdate = simpleDateFormat.format(date);
         long longdate = Long.parseLong(nowdate);
         String nowtime = simpleTimeFormat.format(date);
         long longtime = Long.parseLong(nowtime);
-        System.out.println(longdate);
+        System.out.println(nowtime);
 
         try {
             Date nd = simpleDateFormat.parse(nowdate);

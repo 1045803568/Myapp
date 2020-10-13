@@ -1,13 +1,20 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -25,23 +32,22 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class RateShow extends AppCompatActivity implements Runnable{
+public class RateShow extends AppCompatActivity implements Runnable,AdapterView.OnItemClickListener {
 
     private static final String TAG = "RateShow";
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");// HH:mm:ss
-    SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(" HH:mm:ss");// HH:mm:ss
-    //获取当前时间
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");// HH:mm:ss
+    SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HHmmss");// HH:mm:ss
     Date date = new Date(System.currentTimeMillis());
-    long d1 = date.getTime()
     String nowdate = simpleDateFormat.format(date);
+    long longnowdate = Long.parseLong(nowdate);
     String nowtime = simpleTimeFormat.format(date);
-    String dateindex = "08:00:00";
+    long longnowtime = Long.parseLong(nowtime);
+    String dateindex = "080000";
+    long longdateindex = Long.parseLong(dateindex);
 
     Handler handler = new Handler(){
         public void handleMessage(Message msg){
@@ -53,10 +59,10 @@ public class RateShow extends AppCompatActivity implements Runnable{
                 Elements tables = doc.getElementsByTag("table");
                 Element table = tables.get(0);
                 Elements tds = table.getElementsByTag("td");
-                SharedPreferences sharedPreferences = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences("rate", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("date",nowdate);
-                editor.putString("time",nowtime);
+                editor.putLong("date",longnowdate);
+                editor.putLong("time",longnowtime);
                 ListView listview = findViewById(R.id.mylist);
                 ArrayList<String> list = new ArrayList<String>();
                 float v;
@@ -67,14 +73,16 @@ public class RateShow extends AppCompatActivity implements Runnable{
                     String val = td2.text();
                     Log.i(TAG,"run: " + str1 + "==>" + val);
                     v = 100f / Float.parseFloat(val);
-                    list.add(str1 + "==>" + val);
-                    editor.putFloat(str1,v);
+                    list.add(str1 + "==>" + v);
+                    editor.putString("rate"+i,str1 + "==>" + v);
                 }
                 editor.putInt("size",list.size());
+                editor.putBoolean("is_first_open",false);
                 editor.apply();
                 finish();
                 ListAdapter adapter = new ArrayAdapter<String>(RateShow.this,android.R.layout.simple_list_item_1,list);
                 listview.setAdapter(adapter);
+                listview.setEmptyView(findViewById(R.id.textView12));
             }super.handleMessage(msg);
         }
     };
@@ -83,28 +91,37 @@ public class RateShow extends AppCompatActivity implements Runnable{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate_show);
-        SharedPreferences sharedPreferences= getSharedPreferences("myrate", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String savetime = sharedPreferences.getString("time",nowtime);
-        String savedate = sharedPreferences.getString("date",nowtime);
-        try {
-            Date st = simpleTimeFormat.parse(savetime);
-            Date sd = simpleDateFormat.parse(savedate);
-            Date nd = simpleDateFormat.parse(nowdate);
-            Date nt = simpleDateFormat.parse(nowtime);
-            Date di = simpleDateFormat.parse(dateindex);
-            if(nowdate.equals(savedate)&&nt.getTime()>di.getTime()){
+
+
+        SharedPreferences sharedPreferences= getSharedPreferences("rate", Activity.MODE_PRIVATE);
+        //PreferenceManager.getDefaultSharedPreferences(this);
+
+        boolean isFirstIn = sharedPreferences.getBoolean("is_first_open", true);
+
+        Log.i(TAG, "onCreate: "+sharedPreferences.getInt("size",0)*6);
+        if(isFirstIn){
+            Thread t1 = new Thread(this);
+            t1.start();
+        }else {
+            long savedate = sharedPreferences.getLong("date",longnowdate);
+            if(longnowdate!=savedate&&longnowtime>longdateindex){
                 Thread t1 = new Thread(this);
                 t1.start();
             }
             else {
-                ArrayList<String> list = new ArrayList<String>();
-                for(int i =0;i<sharedPreferences.l)
+                ListView listView1 = findViewById(R.id.mylist);
+                int j;
+                ArrayList<String> list1 = new ArrayList<String>();
+                for(j = 0;j<sharedPreferences.getInt("size",0)*6;j+=6){
+                    list1.add(sharedPreferences.getString("rate"+j,null));
+                    Log.i(TAG, "onCreate: "+sharedPreferences.getString("rate"+j,"1"));
+                }
+                ArrayAdapter adapter1 = new ArrayAdapter<String>(RateShow.this,android.R.layout.simple_list_item_1,list1);
+                listView1.setAdapter(adapter1);
+                listView1.setEmptyView(findViewById(R.id.textView12));
+                listView1.setOnItemClickListener(this);
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
-
     }
 
     @Override
@@ -139,4 +156,17 @@ public class RateShow extends AppCompatActivity implements Runnable{
         }
         return out.toString();
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示").setMessage("请确认是否删除当前数据").setPositiveButton("是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.i(TAG, "onClick: 对话框事件处理");
+
+            }
+        })
+    }
+
 }

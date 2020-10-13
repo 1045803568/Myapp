@@ -11,7 +11,7 @@ public class RateFrash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate_frash);
 
-        Intent intent = new Intent(this, AlarmService.class);
-        startService(intent);
+       //Intent intent = new Intent(this, AlarmService.class);
+        //startService(intent);
     }
 }
