@@ -166,7 +166,7 @@ public class RateShow extends AppCompatActivity implements Runnable,AdapterView.
                 Log.i(TAG, "onClick: 对话框事件处理");
 
             }
-        })
+        });
     }
 
 }
