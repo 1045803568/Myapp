@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 
 import org.jsoup.Jsoup;
@@ -35,8 +38,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
-public class RateShow extends AppCompatActivity implements Runnable,AdapterView.OnItemClickListener {
+public class RateShow extends ListActivity implements Runnable,AdapterView.OnItemClickListener {
 
     private static final String TAG = "RateShow";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");// HH:mm:ss
@@ -48,6 +52,11 @@ public class RateShow extends AppCompatActivity implements Runnable,AdapterView.
     long longnowtime = Long.parseLong(nowtime);
     String dateindex = "080000";
     long longdateindex = Long.parseLong(dateindex);
+    private SimpleAdapter listItemAdapter;
+//    ListView listView1 = findViewById(R.id.mylist);
+    ArrayList<HashMap<String, String>> list1 = new ArrayList<HashMap<String, String>>();
+    SimpleAdapter adapter = new SimpleAdapter(this.list1,android.R.layout.simple_list_item_1,list1,new String[] { "ItemTitle", "ItemDetail" },
+            new int[] { R.id.currency, R.id.rate});
 
     Handler handler = new Handler(){
         public void handleMessage(Message msg){
@@ -63,17 +72,21 @@ public class RateShow extends AppCompatActivity implements Runnable,AdapterView.
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putLong("date",longnowdate);
                 editor.putLong("time",longnowtime);
-                ListView listview = findViewById(R.id.mylist);
-                ArrayList<String> list = new ArrayList<String>();
+//                ListView listview = findViewById(R.id.mylist);
+                ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
                 float v;
+
                 for(int i=0;i<tds.size();i+=6){
+                    HashMap<String, String> map = new HashMap<String, String>();
                     Element td1 = tds.get(i);
                     Element td2 = tds.get(i+5);
                     String str1 = td1.text();
                     String val = td2.text();
                     Log.i(TAG,"run: " + str1 + "==>" + val);
                     v = 100f / Float.parseFloat(val);
-                    list.add(str1 + "==>" + v);
+                    map.put("currency",str1);
+                    map.put("rate",String.valueOf(v));
+                    list.add(map);
                     editor.putString("rate"+i,str1 + "==>" + v);
                 }
                 editor.putInt("size",list.size());
@@ -86,6 +99,22 @@ public class RateShow extends AppCompatActivity implements Runnable,AdapterView.
             }super.handleMessage(msg);
         }
     };
+
+    private void initListView() {
+        list1 = new ArrayList<HashMap<String, String>>();
+        for (int i = 0; i < 10; i++) {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("currency", "Rate： " + i); // 标题文字
+            map.put("rate", "detail" + i); // 详情描述
+            list1.add(map);
+        }
+        // 生成适配器的Item和动态数组对应的元素
+        listItemAdapter = new SimpleAdapter(this, list1, // listItems数据源
+                R.layout.activity_rate_show, // ListItem的XML布局实现
+                new String[] { "currency", "rate" },
+                new int[] { R.id.currency, R.id.rate }
+        );
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,17 +138,15 @@ public class RateShow extends AppCompatActivity implements Runnable,AdapterView.
                 t1.start();
             }
             else {
-                ListView listView1 = findViewById(R.id.mylist);
                 int j;
-                ArrayList<String> list1 = new ArrayList<String>();
                 for(j = 0;j<sharedPreferences.getInt("size",0)*6;j+=6){
                     list1.add(sharedPreferences.getString("rate"+j,null));
-                    Log.i(TAG, "onCreate: "+sharedPreferences.getString("rate"+j,"1"));
+                   // Log.i(TAG, "onCreate: "+sharedPreferences.getString("rate"+j,"1"));
                 }
-                ArrayAdapter adapter1 = new ArrayAdapter<String>(RateShow.this,android.R.layout.simple_list_item_1,list1);
                 listView1.setAdapter(adapter1);
                 listView1.setEmptyView(findViewById(R.id.textView12));
                 listView1.setOnItemClickListener(this);
+//                listView1.setOnItemLongClickListener((AdapterView.OnItemLongClickListener) this);
             }
         }
     }
@@ -158,15 +185,21 @@ public class RateShow extends AppCompatActivity implements Runnable,AdapterView.
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("提示").setMessage("请确认是否删除当前数据").setPositiveButton("是", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Log.i(TAG, "onClick: 对话框事件处理");
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("提示").setMessage("请确认是否删除当前数据").setPositiveButton("是", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                Log.i(TAG, "onClick: 对话框事件处理");
+//
+//            }
+//        });
+        Intent intent = new Intent();
 
-            }
-        });
-    }
+        Object itemAtPosition = listView1.getItemAtPosition(position);
+        ArrayList<String> list2 = (ArrayList<String>)itemAtPosition;
+
+        intent.putExtra("currency",((ArrayList<String>) itemAtPosition).get())
+
 
 }

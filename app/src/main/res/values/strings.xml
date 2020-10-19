@@ -24,4 +24,5 @@
     <string name="WON">WON</string>
     <string name="rata_config">config</string>
     <string name="sava">Sava</string>
+    <string name="currency">currency</string>
 </resources>
