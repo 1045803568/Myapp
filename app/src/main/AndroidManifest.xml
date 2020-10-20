@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RateFrash"></activity>
+        <activity android:name=".CurRateDb"></activity>
+        <activity android:name=".RateFrash" />
         <activity android:name=".Hdler" />
         <activity android:name=".RateExchange" />
         <activity android:name=".RateConfig" />
@@ -29,9 +30,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".AlarmService"></service>
+        <service android:name=".AlarmService" />
 
-        <receiver android:name=".AlarmReceiver"></receiver>
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>
