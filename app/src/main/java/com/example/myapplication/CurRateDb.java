@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
@@ -42,7 +44,6 @@ public class CurRateDb extends AppCompatActivity implements Runnable {
     long longnowtime = Long.parseLong(nowtime);
     String dateindex = "080000";
     long longdateindex = Long.parseLong(dateindex);
-    ListView listView = findViewById(R.id.ratelist);
     RateManager rm = new RateManager(this);
 
 
@@ -60,6 +61,7 @@ public class CurRateDb extends AppCompatActivity implements Runnable {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putLong("date",longnowdate);
                 editor.putLong("time",longnowtime);
+                ListView listView = findViewById(R.id.ratelist);
                 RateItem it = new RateItem();
                 ArrayList<String> list = new ArrayList<>();
                 float v;
@@ -74,7 +76,9 @@ public class CurRateDb extends AppCompatActivity implements Runnable {
                     it.setCurrate(String.valueOf(v));
                     rm.add(it);
                     list.add("Currency: "+str1+" ==> "+v);
+                    //Log.i(TAG, "handleMessage: ");
                 }
+                editor.putBoolean("is_first_open",false);
                 editor.apply();
                 finish();
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(CurRateDb.this,android.R.layout.simple_list_item_1,list);
@@ -88,6 +92,7 @@ public class CurRateDb extends AppCompatActivity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cur_rate_db);
 
+        ListView listView = findViewById(R.id.ratelist);
         SharedPreferences sharedPreferences= getSharedPreferences("ratedb", Activity.MODE_PRIVATE);
         //PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -104,11 +109,19 @@ public class CurRateDb extends AppCompatActivity implements Runnable {
             }
             else {
                 RateManager rm = new RateManager(this);
+                List<RateItem> itemList= rm.listAll();
+                ArrayList<String> list = new ArrayList<>();
+                for (int i=0;i<itemList.size();i++){
+                    RateItem rateItem = itemList.get(i);
+                    ContentValues values = new ContentValues();
+                    int id = rateItem.getID();
+                    String currency = rateItem.getCurname();
+                    String rate = rateItem.getCurrate();
+                    list.add("id: "+id+" Curname: "+currency+" rata: "+rate);
+                }
 
-                listView1.setAdapter(adapter1);
-                listView1.setEmptyView(findViewById(R.id.textView12));
-                listView1.setOnItemClickListener(this);
-//                listView1.setOnItemLongClickListener((AdapterView.OnItemLongClickListener) this);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(CurRateDb.this,android.R.layout.simple_list_item_1,list);
+                listView.setAdapter(adapter);
             }
         }
     }

@@ -30,9 +30,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".AlarmService" />
-
-        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>
